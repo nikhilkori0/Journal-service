@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active: dev
+
+server:
+  port: 8080
+  servlet:
+    context-path: /journal
+
+#logging config shifted to logback.xml
+#logging:
+#  level:
+#    com:
+#      learn:
+#        journalApp: DEBUG
