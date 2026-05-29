@@ -1,6 +1,6 @@
 package com.learn.journal.service;
 
-import com.learn.journal.entity.User;
+import com.learn.journal.entity.UserEntity;
 import com.learn.journal.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
@@ -23,11 +23,11 @@ public class UserService {
 
     //private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    public boolean saveNewUser(User user) {
+    public boolean saveNewUser(UserEntity userEntity) {
         try {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setRoles(List.of("USER"));
-            userRepository.save(user);
+            userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+            userEntity.setRoles(List.of("USER"));
+            userRepository.save(userEntity);
             return true;
         } catch(Exception e) {
             log.error("Error:", e);
@@ -35,21 +35,21 @@ public class UserService {
         }
     }
 
-    public void saveAdmin(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(List.of("USER", "ADMIN"));
-        userRepository.save(user);
+    public void saveAdmin(UserEntity userEntity) {
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        userEntity.setRoles(List.of("USER", "ADMIN"));
+        userRepository.save(userEntity);
     }
 
-    public void saveUser(User user) {
-        userRepository.save(user);
+    public void saveUser(UserEntity userEntity) {
+        userRepository.save(userEntity);
     }
 
-    public List<User> getAll() {
+    public List<UserEntity> getAll() {
         return userRepository.findAll();
     }
 
-    public Optional<User> findById(ObjectId id) {
+    public Optional<UserEntity> findById(ObjectId id) {
         return userRepository.findById(id);
     }
 
@@ -57,7 +57,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public User findByUserName(String username) {
+    public UserEntity findByUserName(String username) {
         return userRepository.findByUsername(username);
     }
 

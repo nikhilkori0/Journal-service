@@ -2,6 +2,8 @@ package com.learn.journal;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 //@EnableTransactionManagement
@@ -15,4 +17,9 @@ public class JournalApplication {
 //	public PlatformTransactionManager addPlatformTransactionManager(MongoDatabaseFactory databaseFactory) {
 //		return new MongoTransactionManager(databaseFactory);
 //	}
+
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
 }

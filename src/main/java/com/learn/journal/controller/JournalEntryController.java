@@ -1,8 +1,8 @@
 package com.learn.journal.controller;
 
 import com.learn.journal.dto.JournalEntryDTO;
-import com.learn.journal.entity.JournalEntry;
-import com.learn.journal.entity.User;
+import com.learn.journal.entity.JournalEntryEntity;
+import com.learn.journal.entity.UserEntity;
 import com.learn.journal.service.JournalEntryService;
 import com.learn.journal.service.UserService;
 import org.bson.types.ObjectId;
@@ -27,12 +27,12 @@ public class JournalEntryController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<JournalEntry>> getAllJournalEntriesOfUser() {
+    public ResponseEntity<List<JournalEntryEntity>> getAllJournalEntriesOfUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        User user = userService.findByUserName(username);
-        List<JournalEntry> all = user.getJournalEntries();
+        UserEntity userEntity = userService.findByUserName(username);
+        List<JournalEntryEntity> all = userEntity.getJournalEntries();
         if(all != null && !all.isEmpty()) {
             return new ResponseEntity<>(all, HttpStatus.OK);
         }
@@ -40,9 +40,9 @@ public class JournalEntryController {
     }
 
     @PostMapping
-    public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntryDTO myEntryDTO) {
+    public ResponseEntity<JournalEntryEntity> createEntry(@RequestBody JournalEntryDTO myEntryDTO) {
         try {
-            JournalEntry myEntry = JournalEntry.builder().title(myEntryDTO.getTitle()).content(myEntryDTO.getContent()).build();
+            JournalEntryEntity myEntry = JournalEntryEntity.builder().title(myEntryDTO.getTitle()).content(myEntryDTO.getContent()).build();
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String username = authentication.getName();
@@ -56,12 +56,12 @@ public class JournalEntryController {
     }
 
     @GetMapping("id/{myId}")
-    public ResponseEntity<JournalEntry> getJournalEntryById(@PathVariable ObjectId myId) {
+    public ResponseEntity<JournalEntryEntity> getJournalEntryById(@PathVariable ObjectId myId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        User user = userService.findByUserName(username);
-        List<JournalEntry> list = user.getJournalEntries().stream().filter(x -> x.getId().equals(myId)).toList();
+        UserEntity userEntity = userService.findByUserName(username);
+        List<JournalEntryEntity> list = userEntity.getJournalEntries().stream().filter(x -> x.getId().equals(myId)).toList();
         if(!list.isEmpty()) {
             return new ResponseEntity<>(list.get(0), HttpStatus.OK);
         }
@@ -82,18 +82,18 @@ public class JournalEntryController {
     }
 
     @PutMapping("id/{myId}")
-    public ResponseEntity<JournalEntry> updateJournalById(@PathVariable ObjectId myId, @RequestBody JournalEntryDTO journalEntryDTO) {
-        JournalEntry newEntry = JournalEntry.builder().title(journalEntryDTO.getTitle()).content(journalEntryDTO.getContent()).build();
+    public ResponseEntity<JournalEntryEntity> updateJournalById(@PathVariable ObjectId myId, @RequestBody JournalEntryDTO journalEntryDTO) {
+        JournalEntryEntity newEntry = JournalEntryEntity.builder().title(journalEntryDTO.getTitle()).content(journalEntryDTO.getContent()).build();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        User user = userService.findByUserName(username);
-        List<JournalEntry> list = user.getJournalEntries().stream().filter(x -> x.getId().equals(myId)).toList();
+        UserEntity userEntity = userService.findByUserName(username);
+        List<JournalEntryEntity> list = userEntity.getJournalEntries().stream().filter(x -> x.getId().equals(myId)).toList();
         if(!list.isEmpty()) {
-            Optional<JournalEntry> optionalJournalEntry = journalEntryService.findById(myId);
+            Optional<JournalEntryEntity> optionalJournalEntry = journalEntryService.findById(myId);
             if(optionalJournalEntry.isPresent()) {
-                JournalEntry old = optionalJournalEntry.get();
+                JournalEntryEntity old = optionalJournalEntry.get();
                 old.setTitle(!newEntry.getTitle().equals("") ? newEntry.getTitle() : old.getTitle());
                 old.setContent(newEntry.getContent() != null && !newEntry.getContent().equals("") ? newEntry.getContent() : old.getContent());
                 journalEntryService.saveEntry(old);

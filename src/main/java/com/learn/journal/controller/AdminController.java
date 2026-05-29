@@ -1,7 +1,8 @@
 package com.learn.journal.controller;
 
+import com.learn.journal.cache.AppCache;
 import com.learn.journal.dto.UserDTO;
-import com.learn.journal.entity.User;
+import com.learn.journal.entity.UserEntity;
 import com.learn.journal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,12 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    AppCache appCache;
+
     @GetMapping("/all-users")
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> all = userService.getAll();
+    public ResponseEntity<List<UserEntity>> getAllUsers() {
+        List<UserEntity> all = userService.getAll();
         if(all != null &&!all.isEmpty()) {
             return new ResponseEntity<>(all, HttpStatus.OK);
         }
@@ -28,7 +32,12 @@ public class AdminController {
 
     @PostMapping("/create-admin-user")
     public void createAdminUser(@RequestBody UserDTO userDTO) {
-        User user = User.builder().username(userDTO.getUsername()).password(userDTO.getPassword()).build();
-        userService.saveAdmin(user);
+        UserEntity userEntity = UserEntity.builder().username(userDTO.getUsername()).password(userDTO.getPassword()).build();
+        userService.saveAdmin(userEntity);
+    }
+
+    @GetMapping("clear-app-cache")
+    public void clearAppCache() {
+        appCache.init();
     }
 }

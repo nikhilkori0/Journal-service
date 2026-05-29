@@ -1,7 +1,7 @@
 package com.learn.journal.service;
 
-import com.learn.journal.entity.JournalEntry;
-import com.learn.journal.entity.User;
+import com.learn.journal.entity.JournalEntryEntity;
+import com.learn.journal.entity.UserEntity;
 import com.learn.journal.repository.JournalEntryRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,38 +20,38 @@ public class JournalEntryService {
     @Autowired
     private UserService userService;
 
-    public void saveNewEntry(JournalEntry journalEntry, String username) {
+    public void saveNewEntry(JournalEntryEntity journalEntryEntity, String username) {
         try {
-            journalEntry.setDate(LocalDateTime.now());
-            JournalEntry saved = journalEntryRepository.save(journalEntry);
+            journalEntryEntity.setDate(LocalDateTime.now());
+            JournalEntryEntity saved = journalEntryRepository.save(journalEntryEntity);
 
-            User user = userService.findByUserName(username);
-            user.getJournalEntries().add(saved);
-            userService.saveUser(user);
+            UserEntity userEntity = userService.findByUserName(username);
+            userEntity.getJournalEntries().add(saved);
+            userService.saveUser(userEntity);
         } catch (Exception e) {
             System.out.println(e);
             throw new RuntimeException("Error occurred while saving an entry.", e);
         }
     }
 
-    public void saveEntry(JournalEntry journalEntry) {
-        journalEntry.setDate(LocalDateTime.now());
-        journalEntryRepository.save(journalEntry);
+    public void saveEntry(JournalEntryEntity journalEntryEntity) {
+        journalEntryEntity.setDate(LocalDateTime.now());
+        journalEntryRepository.save(journalEntryEntity);
     }
 
-    public List<JournalEntry> getAll() {
+    public List<JournalEntryEntity> getAll() {
         return journalEntryRepository.findAll();
     }
 
-    public Optional<JournalEntry> findById(ObjectId id) {
+    public Optional<JournalEntryEntity> findById(ObjectId id) {
         return journalEntryRepository.findById(id);
     }
 
     public boolean deleteById(ObjectId id, String username) {
-        User user = userService.findByUserName(username);
-        boolean removed = user.getJournalEntries().removeIf(x -> x.getId().equals(id));
+        UserEntity userEntity = userService.findByUserName(username);
+        boolean removed = userEntity.getJournalEntries().removeIf(x -> x.getId().equals(id));
         if(removed) {
-            userService.saveUser(user);
+            userService.saveUser(userEntity);
             journalEntryRepository.deleteById(id);
         }
         return removed;

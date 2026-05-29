@@ -1,6 +1,7 @@
 package com.learn.journal.service;
 
-import com.learn.journal.entity.User;
+import com.learn.journal.config.UserDetailsServiceImpl;
+import com.learn.journal.entity.UserEntity;
 import com.learn.journal.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
@@ -18,7 +19,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @Disabled
-public class UserDetailsServiceImplTests {
+public class UserEntityDetailsServiceImplTests {
 
     @InjectMocks
     private UserDetailsServiceImpl userDetailsService;
@@ -33,7 +34,7 @@ public class UserDetailsServiceImplTests {
 
     @Test
     void loadUserByUsernameTest() {
-        when(userRepository.findByUsername(ArgumentMatchers.anyString())).thenReturn(User.builder().username("ram").password("a").roles(new ArrayList<>()).build());
+        when(userRepository.findByUsername(ArgumentMatchers.anyString())).thenReturn(UserEntity.builder().username("ram").password("a").roles(new ArrayList<>()).build());
         UserDetails user = userDetailsService.loadUserByUsername("ram");
         Assertions.assertNotNull(user);
     }

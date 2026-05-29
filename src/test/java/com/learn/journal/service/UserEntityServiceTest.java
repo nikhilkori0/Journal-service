@@ -1,6 +1,6 @@
 package com.learn.journal.service;
 
-import com.learn.journal.entity.User;
+import com.learn.journal.entity.UserEntity;
 import com.learn.journal.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
@@ -12,15 +12,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @Disabled
-public class UserServiceTest {
+public class UserEntityServiceTest {
 
     @Autowired
     private UserRepository userRepository;
 
     @Test
     public void testFindByUserName() {
-        User user = userRepository.findByUsername("ram");
-        Assertions.assertNotNull(user);
+        UserEntity userEntity = userRepository.findByUsername("ram");
+        Assertions.assertNotNull(userEntity);
     }
 
     @Disabled

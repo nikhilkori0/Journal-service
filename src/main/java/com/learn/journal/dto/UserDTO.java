@@ -1,6 +1,6 @@
 package com.learn.journal.dto;
 
-import com.learn.journal.entity.JournalEntry;
+import com.learn.journal.entity.JournalEntryEntity;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -15,5 +15,5 @@ public class UserDTO {
     @NonNull
     private String password;
 
-    private List<JournalEntry> journalEntries = new ArrayList<>();
+    private List<JournalEntryEntity> journalEntries = new ArrayList<>();
 }
