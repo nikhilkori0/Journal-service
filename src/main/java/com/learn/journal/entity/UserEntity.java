@@ -30,4 +30,8 @@ public class UserEntity {
     private List<JournalEntryEntity> journalEntries = new ArrayList<>();
 
     private List<String> roles;
+
+    private String email;
+
+    private boolean sentimentAnalysis;
 }

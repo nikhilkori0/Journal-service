@@ -5,5 +5,16 @@ spring:
       port: 27017
       database: journaldb
       auto-index-creation: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ex@gmail.com
+    password: xxxx xxxx xxxx xxxx
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
-weather-api-key:
+weather-api-key: 2fa32d4aee989bb765695ba8f15b3582
