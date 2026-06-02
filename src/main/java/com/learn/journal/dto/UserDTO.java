@@ -16,4 +16,8 @@ public class UserDTO {
     private String password;
 
     private List<JournalEntryEntity> journalEntries = new ArrayList<>();
+
+    private String email;
+
+    private boolean sentimentAnalysis;
 }

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,7 +33,13 @@ public class AdminController {
 
     @PostMapping("/create-admin-user")
     public void createAdminUser(@RequestBody UserDTO userDTO) {
-        UserEntity userEntity = UserEntity.builder().username(userDTO.getUsername()).password(userDTO.getPassword()).build();
+        UserEntity userEntity = UserEntity.builder()
+                                .username(userDTO.getUsername())
+                                .password(userDTO.getPassword())
+                                .journalEntries(new ArrayList<>())
+                                .email(userDTO.getEmail())
+                                .sentimentAnalysis(userDTO.isSentimentAnalysis())
+                                .build();
         userService.saveAdmin(userEntity);
     }
 

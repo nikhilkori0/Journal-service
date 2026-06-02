@@ -34,7 +34,8 @@ public class UserEntityDetailsServiceImplTests {
 
     @Test
     void loadUserByUsernameTest() {
-        when(userRepository.findByUsername(ArgumentMatchers.anyString())).thenReturn(UserEntity.builder().username("ram").password("a").roles(new ArrayList<>()).build());
+        when(userRepository.findByUsername(ArgumentMatchers.anyString()))
+                .thenReturn(UserEntity.builder().username("ram").password("a").roles(new ArrayList<>()).build());
         UserDetails user = userDetailsService.loadUserByUsername("ram");
         Assertions.assertNotNull(user);
     }

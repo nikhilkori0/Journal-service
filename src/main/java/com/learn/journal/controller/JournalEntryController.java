@@ -42,7 +42,11 @@ public class JournalEntryController {
     @PostMapping
     public ResponseEntity<JournalEntryEntity> createEntry(@RequestBody JournalEntryDTO myEntryDTO) {
         try {
-            JournalEntryEntity myEntry = JournalEntryEntity.builder().title(myEntryDTO.getTitle()).content(myEntryDTO.getContent()).build();
+            JournalEntryEntity myEntry = JournalEntryEntity.builder()
+                    .title(myEntryDTO.getTitle())
+                    .content(myEntryDTO.getContent())
+                    .sentiment(myEntryDTO.getSentiment())
+                    .build();
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String username = authentication.getName();
@@ -83,7 +87,11 @@ public class JournalEntryController {
 
     @PutMapping("id/{myId}")
     public ResponseEntity<JournalEntryEntity> updateJournalById(@PathVariable ObjectId myId, @RequestBody JournalEntryDTO journalEntryDTO) {
-        JournalEntryEntity newEntry = JournalEntryEntity.builder().title(journalEntryDTO.getTitle()).content(journalEntryDTO.getContent()).build();
+        JournalEntryEntity newEntry = JournalEntryEntity.builder()
+                .title(journalEntryDTO.getTitle())
+                .content(journalEntryDTO.getContent())
+                .sentiment(journalEntryDTO.getSentiment())
+                .build();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
