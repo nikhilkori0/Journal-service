@@ -5,19 +5,43 @@ spring:
       port: 27017
       database: journaldb
       auto-index-creation: true
+
   mail:
     host: smtp.gmail.com
     port: 587
-    username:
-    password:
+    username: x
+    password: x
     properties:
       mail:
         smtp:
           auth: true
           starttls:
             enable: true
+
   redis:
     host: localhost
     port: 6379
+
+  kafka:
+    bootstrap-servers: pkc-l7pr2.ap-south-1.aws.confluent.cloud:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: weekly-sentiment-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.learn.journal.model
+    properties:
+      security:
+        protocol: SASL_SSL
+      sasl:
+        mechanism: PLAIN
+        jaas:
+          config: org.apache.kafka.common.security.plain.PlainLoginModule required username='x' password='x';
+      session:
+        timeout:
+          ms: 45000
 
 weather-api-key:
