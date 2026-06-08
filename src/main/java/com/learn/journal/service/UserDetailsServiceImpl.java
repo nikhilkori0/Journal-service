@@ -1,4 +1,4 @@
-package com.learn.journal.config;
+package com.learn.journal.service;
 
 import com.learn.journal.entity.UserEntity;
 import com.learn.journal.repository.UserRepository;

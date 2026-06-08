@@ -1,6 +1,5 @@
 package com.learn.journal.service;
 
-import com.learn.journal.config.UserDetailsServiceImpl;
 import com.learn.journal.entity.UserEntity;
 import com.learn.journal.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
